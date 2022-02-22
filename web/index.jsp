@@ -8,10 +8,10 @@
 <%@include  file="header.jsp"%>
 <body>
     <div class="container">
-        <form action="">
+        <form action="login" method="post">
             <div class="container container-md">
-                <h2>Iniciar Sesi&oacute;n</h2>
-                <p>Clientes registradps</p>
+                <h2 style="color: blueviolet">Iniciar Sesi&oacute;n</h2>
+                <p>Clientes registrados</p>
                 <p>Si ya tienes cuenta con nosotros, por favor inicia sesi&oa&oacute;n</p>
                 <div class="row mt-md-4">
 
@@ -34,8 +34,6 @@
                             <button class="btn btn-primary btn-warning" type="submit">Iniciar Sesi&oacute;n</button>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </form>
