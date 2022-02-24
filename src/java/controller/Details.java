@@ -2,22 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package log;
+package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author salva
+ * @author joK28
  */
-public class Login extends HttpServlet {
+@WebServlet(name = "Details", urlPatterns = {"/Details"})
+public class Details extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,19 +31,21 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Login</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+         String nombre, desc, img;
+         int precio;
+         RequestDispatcher view = request.getRequestDispatcher("details.jsp");
+         
+         nombre = request.getParameter("nombre");
+         desc = request.getParameter("desc");
+         img = request.getParameter("img");
+         precio = Integer.parseInt(request.getParameter("precio")) ;
+         
+         request.setAttribute("nombre", nombre);
+         request.setAttribute("desc", desc);
+         request.setAttribute("img", img);
+         request.setAttribute("precio", precio);
+         
+         view.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -71,16 +74,7 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            HttpSession log = request.getSession(true);
-            log.setAttribute("user", request.getParameter("email"));
-            RequestDispatcher view = request.getRequestDispatcher("books.jsp");
-
-            view.forward(request, response);
-        } catch (Exception e) {
-            PrintWriter pw = response.getWriter();
-            pw.println("<h1>error en login servlet</h1>");
-        }
+        processRequest(request, response);
     }
 
     /**
