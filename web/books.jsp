@@ -4,90 +4,64 @@
     Author     : joK28
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="model.Book"%>
 <!DOCTYPE html>
 <%@include  file="header.jsp"%>
     <body>
-        <div id="carrito" class="container w-75 my-4">
+        <% 
+            Book book = new Book();
+            List<Book> catalogo = new ArrayList<>();
+            catalogo = book.getBok("novedades");
+            List<Book> catalogo2 = new ArrayList<>();
+            catalogo2 = book.getBok("vendidos");
+        %>
+        <div id="catalogo" class="container w-75 my-4">
         <div id="novedades" class="row">
             <div id="libro_mes" class="col-4">
                 <div class="card border-0 shadow w-75">
-                    <img src="https://imagessl2.casadellibro.com/a/l/t7/62/9788498382662.jpg" class="card-img-top">
+                    <img src="<%= catalogo.get(0).getImg() %>" class="card-img-top">
                     <div class="card-body">
                         <div class="card-title text-center">
-                            <button class="btn btn-primary" >Ver más</button>
+                            <form action="Details" method="POST">
+                                <input type="hidden" name="nombre" value="<%= catalogo.get(0).getNombre()%>" />
+                                <input type="hidden" name="desc" value="<%= catalogo.get(0).getDesc()%>" />
+                                <input type="hidden" name="img" value="<%= catalogo.get(0).getImg()%>" />
+                                <input type="hidden" name="precio" value="<%= catalogo.get(0).getPrecio()%>" />
+                                <input type="submit" value="Ver más" class="btn" style="background-color: blueviolet; color: white"/>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
             <div id="libros-recomendados" class="col-8">
                 <div class="container-fluid">
-                    <h1 class="text-end mb-5 bg-warning w-50 "><span class="text-primary">Novedades</span></h1>
+                    <h1 class="text-end mb-5 bg-warning w-50 "><span style="color: blueviolet">Novedades</span></h1>
                     <div class="row">
                         <div class="col-12 m-auto">
-                            <div class="owl-carousel owl-theme">
-                                <div class="item mb-4">
-                                    <div class="card border-0 shadow">
-                                        <img src="https://imagessl2.casadellibro.com/a/l/t7/62/9788498382662.jpg" class="card-img-top">
-                                        <div class="card-body">
-                                            <div class="card-title text-center">
-                                                <h4>Nombre</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-            
+                            <div class="owl-carousel owl-theme mb-4">
+                                <% for(Book b: catalogo){ %>
+                                  
                                 <div class="item">
                                     <div class="card border-0 shadow">
-                                        <img src="https://imagessl2.casadellibro.com/a/l/t7/62/9788498382662.jpg" class="card-img-top">
+                                        <img src="<%= b.getImg() %>" class="card-img-top">
                                         <div class="card-body">
                                             <div class="card-title text-center">
-                                                <h4>Nombre</h4>
+                                                <form action="Details" method="POST">
+                                                    <input type="hidden" name="nombre" value="<%= b.getNombre() %>" />
+                                                    <input type="hidden" name="desc" value="<%= b.getDesc() %>" />
+                                                    <input type="hidden" name="img" value="<%= b.getImg() %>" />
+                                                    <input type="hidden" name="precio" value="<%= b.getPrecio() %>" />
+                                                    <input type="submit" value="<%= b.getNombre() %>" class="btn" style="color: blueviolet"/>
+                                                </form>
+                                               
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="item">
-                                    <div class="card border-0 shadow">
-                                        <img src="https://imagessl2.casadellibro.com/a/l/t7/62/9788498382662.jpg" class="card-img-top">
-                                        <div class="card-body">
-                                            <div class="card-title text-center">
-                                                <h4>Nombre</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="card border-0 shadow">
-                                        <img src="https://imagessl2.casadellibro.com/a/l/t7/62/9788498382662.jpg" class="card-img-top">
-                                        <div class="card-body">
-                                            <div class="card-title text-center">
-                                                <h4>Nombrel</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="card border-0 shadow">
-                                        <img src="https://imagessl2.casadellibro.com/a/l/t7/62/9788498382662.jpg" class="card-img-top">
-                                        <div class="card-body">
-                                            <div class="card-title text-center">
-                                                <h4>Nombre</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="card border-0 shadow">
-                                        <img src="https://imagessl2.casadellibro.com/a/l/t7/62/9788498382662.jpg" class="card-img-top">
-                                        <div class="card-body">
-                                            <div class="card-title text-center">
-                                                <h4>Nombre</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-            
+                                </div>         
+                                <%    } %>
                             </div>
                         </div>
                     </div>
@@ -97,72 +71,29 @@
         <div id="mas_vendidos" class="row">
             <div id="libros-recomendados" class="col-8">
                 <div class="container-fluid">
-                    <h1 class="text-end mb-5 bg-warning w-50 "><span class="text-primary">Más vendidos</span></h1>
+                    <h1 class="text-end mb-5 bg-warning w-50 "><span style="color: blueviolet">Más vendidos</span></h1>
                     <div class="row">
                         <div class="col-12 m-auto">
-                            <div class="owl-carousel owl-theme">
-                                <div class="item mb-4">
-                                    <div class="card border-0 shadow">
-                                        <img src="https://imagessl2.casadellibro.com/a/l/t7/62/9788498382662.jpg" class="card-img-top">
-                                        <div class="card-body">
-                                            <div class="card-title text-center">
-                                                <h4>Nombre</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-            
+                            <div class="owl-carousel owl-theme mb-4">
+                                 <% for(Book b: catalogo2){ %>
+                                  
                                 <div class="item">
                                     <div class="card border-0 shadow">
-                                        <img src="https://imagessl2.casadellibro.com/a/l/t7/62/9788498382662.jpg" class="card-img-top">
+                                        <img src="<%= b.getImg() %>" class="card-img-top">
                                         <div class="card-body">
                                             <div class="card-title text-center">
-                                                <h4>Nombre</h4>
+                                                <form action="Details" method="POST">
+                                                    <input type="hidden" name="nombre" value="<%= b.getNombre()%>" />
+                                                    <input type="hidden" name="desc" value="<%= b.getDesc()%>" />
+                                                    <input type="hidden" name="img" value="<%= b.getImg()%>" />
+                                                    <input type="hidden" name="precio" value="<%= b.getPrecio()%>" />
+                                                    <input type="submit" value="<%= b.getNombre()%>" class="btn" style="color: blueviolet"/>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="item">
-                                    <div class="card border-0 shadow">
-                                        <img src="https://imagessl2.casadellibro.com/a/l/t7/62/9788498382662.jpg" class="card-img-top">
-                                        <div class="card-body">
-                                            <div class="card-title text-center">
-                                                <h4>Nombre</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="card border-0 shadow">
-                                        <img src="https://imagessl2.casadellibro.com/a/l/t7/62/9788498382662.jpg" class="card-img-top">
-                                        <div class="card-body">
-                                            <div class="card-title text-center">
-                                                <h4>Nombrel</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="card border-0 shadow">
-                                        <img src="https://imagessl2.casadellibro.com/a/l/t7/62/9788498382662.jpg" class="card-img-top">
-                                        <div class="card-body">
-                                            <div class="card-title text-center">
-                                                <h4>Nombre</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="card border-0 shadow">
-                                        <img src="https://imagessl2.casadellibro.com/a/l/t7/62/9788498382662.jpg" class="card-img-top">
-                                        <div class="card-body">
-                                            <div class="card-title text-center">
-                                                <h4>Nombre</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-            
+                                </div>         
+                                <%    } %>
                             </div>
                         </div>
                     </div>
@@ -170,10 +101,16 @@
             </div>
             <div id="libro_mes" class="col-4">
                 <div class="card border-0 shadow w-75 ms-4">
-                    <img src="https://imagessl2.casadellibro.com/a/l/t7/62/9788498382662.jpg" class="card-img-top">
+                    <img src="<%= catalogo2.get(6).getImg() %>" class="card-img-top">
                     <div class="card-body">
                         <div class="card-title text-center">
-                            <button class="btn btn-primary" >Ver más</button>
+                            <form action="Details" method="POST">
+                                <input type="hidden" name="nombre" value="<%= catalogo2.get(6).getNombre()%>" />
+                                <input type="hidden" name="desc" value="<%= catalogo2.get(6).getDesc()%>" />
+                                <input type="hidden" name="img" value="<%= catalogo2.get(6).getImg()%>" />
+                                <input type="hidden" name="precio" value="<%= catalogo2.get(6).getPrecio()%>" />
+                                <input type="submit" value="Ver más" class="btn" style="background-color: blueviolet; color: white"/>
+                            </form>
                         </div>
                     </div>
                 </div>

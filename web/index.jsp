@@ -12,7 +12,7 @@
             <div class="container container-md">
                 <h2 style="color: blueviolet">Iniciar Sesi&oacute;n</h2>
                 <p>Clientes registrados</p>
-                <p>Si ya tienes cuenta con nosotros, por favor inicia sesi&oa&oacute;n</p>
+                <p>Si ya tienes cuenta con nosotros, por favor inicia sesi&oacute;n</p>
                 <div class="row mt-md-4">
 
                     <div class="col-6 col-md-6 col-sm-12">
