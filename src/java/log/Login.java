@@ -74,7 +74,7 @@ public class Login extends HttpServlet {
         try {
             HttpSession log = request.getSession(true);
             log.setAttribute("user", request.getParameter("email"));
-            RequestDispatcher view = request.getRequestDispatcher("a.jsp");
+            RequestDispatcher view = request.getRequestDispatcher("recomendaciones.jsp");
             view.forward(request, response);
         } catch (Exception e) {
             PrintWriter pw = response.getWriter();
